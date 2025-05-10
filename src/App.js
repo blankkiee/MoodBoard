@@ -7,19 +7,21 @@ import Modal from './components/Modal';
 import images from './data/images';
 import Login from './pages/Login';
 
-import UploadForm from './components/UploadForm'; // <-- import at the top
+import UploadForm from './components/UploadForm';
 
 function App() {
   const [selectedVibe, setSelectedVibe] = useState('All');
   const [modalImage, setModalImage] = useState(null);
   const [user, setUser] = useState(null);
-  const [userImages, setUserImages] = useState([]); // <-- new
+  const [userImages, setUserImages] = useState([]);
+  const [showUpload, setShowUpload] = useState(false); // NEW
 
   const handleUpload = (newImage) => {
     setUserImages([newImage, ...userImages]);
+    setShowUpload(false); // Close form after upload
   };
 
-  const allImages = [...userImages, ...images]; // merge with static ones
+  const allImages = [...userImages, ...images];
   const filteredImages =
     selectedVibe === 'All'
       ? allImages
@@ -34,8 +36,13 @@ function App() {
             user ? (
               <div className="App">
                 <h1>MoodBoard 🎨</h1>
-                <Navbar selectedVibe={selectedVibe} setSelectedVibe={setSelectedVibe} />
-                <UploadForm onUpload={handleUpload} /> {/* new */}
+                <Navbar
+                  selectedVibe={selectedVibe}
+                  setSelectedVibe={setSelectedVibe}
+                  toggleUpload={() => setShowUpload(!showUpload)} // NEW
+                  isUploadVisible={showUpload}
+                />
+                {showUpload && <UploadForm onUpload={handleUpload} />} {/* CONDITIONAL */}
                 <Gallery images={filteredImages} openModal={setModalImage} />
                 <Modal image={modalImage} closeModal={() => setModalImage(null)} />
               </div>
@@ -49,6 +56,7 @@ function App() {
     </Router>
   );
 }
+
 
 
 export default App;

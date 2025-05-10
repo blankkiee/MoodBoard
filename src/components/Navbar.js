@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = ({ selectedVibe, setSelectedVibe }) => {
+const Navbar = ({ selectedVibe, setSelectedVibe, toggleUpload, isUploadVisible }) => {
   const vibes = ['All', 'Cozy', 'Nature', 'Retro', 'Minimal'];
 
   return (
@@ -14,6 +14,9 @@ const Navbar = ({ selectedVibe, setSelectedVibe }) => {
           {vibe}
         </button>
       ))}
+      <button onClick={toggleUpload}>
+        {isUploadVisible ? 'Close Upload' : '+ Upload'}
+      </button>
     </nav>
   );
 };
