@@ -106,3 +106,41 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.upload-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scaleY(0.95);
+  transition: all 0.4s ease;
+}
+
+.upload-wrapper.open {
+  max-height: 800px; /* enough to fit form */
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.image-card {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 22px;
+  background: white;
+  padding: 4px 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 2;
+  transition: transform 0.2s;
+}
+
+.heart-icon:hover {
+  transform: scale(1.2);
+}

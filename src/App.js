@@ -15,17 +15,28 @@ function App() {
   const [user, setUser] = useState(null);
   const [userImages, setUserImages] = useState([]);
   const [showUpload, setShowUpload] = useState(false); // NEW
+  const [favorites, setFavorites] = useState([]);
 
   const handleUpload = (newImage) => {
     setUserImages([newImage, ...userImages]);
     setShowUpload(false); // Close form after upload
   };
 
+  const toggleFavorite = (id) => {
+  setFavorites((prev) =>
+    prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
+  );
+};
+
+
   const allImages = [...userImages, ...images];
   const filteredImages =
-    selectedVibe === 'All'
-      ? allImages
-      : allImages.filter((img) => img.vibe === selectedVibe);
+  selectedVibe === 'All'
+    ? allImages
+    : selectedVibe === 'Favorites'
+    ? allImages.filter((img) => favorites.includes(img.id))
+    : allImages.filter((img) => img.vibe === selectedVibe);
+
 
   return (
     <Router>
@@ -42,8 +53,17 @@ function App() {
                   toggleUpload={() => setShowUpload(!showUpload)} // NEW
                   isUploadVisible={showUpload}
                 />
-                {showUpload && <UploadForm onUpload={handleUpload} />} {/* CONDITIONAL */}
-                <Gallery images={filteredImages} openModal={setModalImage} />
+                <div className={`upload-wrapper ${showUpload ? 'open' : ''}`}>
+  <UploadForm onUpload={handleUpload} />
+</div>
+ 
+                <Gallery
+  images={filteredImages}
+  openModal={setModalImage}
+  favorites={favorites} // NEW
+  toggleFavorite={toggleFavorite} // NEW
+/>
+
                 <Modal image={modalImage} closeModal={() => setModalImage(null)} />
               </div>
             ) : (

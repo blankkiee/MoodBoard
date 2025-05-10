@@ -14,6 +14,12 @@ const Navbar = ({ selectedVibe, setSelectedVibe, toggleUpload, isUploadVisible }
           {vibe}
         </button>
       ))}
+      <button
+        className={selectedVibe === 'Favorites' ? 'active' : ''}
+        onClick={() => setSelectedVibe('Favorites')}
+      >
+        ❤️ Favorites
+      </button>
       <button onClick={toggleUpload}>
         {isUploadVisible ? 'Close Upload' : '+ Upload'}
       </button>
