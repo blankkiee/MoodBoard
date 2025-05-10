@@ -1,38 +1,43 @@
 import React, { useState } from 'react';
 
 const UploadForm = ({ onUpload }) => {
-  const [url, setUrl] = useState('');
-  const [vibe, setVibe] = useState('Cozy');
+  // const [url, setUrl] = useState(''); alisin na URL SET UP
+  const [vibe, setVibe] = useState('Cozy'); 
   const [description, setDescription] = useState('');
+  const [file, setFile] = useState(null);
+
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!url || !description) return;
+  e.preventDefault();
+  if (!file || !description) return;
 
-    const newImage = {
-      id: Date.now(), // unique ID
-      url,
-      vibe,
-      description,
-    };
+  const imageUrl = URL.createObjectURL(file); // 👈 Convert file to local URL
 
-    onUpload(newImage);
-    // Reset form
-    setUrl('');
-    setVibe('Cozy');
-    setDescription('');
+  const newImage = {
+    id: Date.now(),
+    url: imageUrl,
+    vibe,
+    description,
   };
+
+  onUpload(newImage);
+
+  // Reset form
+  setFile(null);
+  setVibe('Cozy');
+  setDescription('');
+};
 
   return (
     <form className="upload-form" onSubmit={handleSubmit}>
       <h3>Upload a Vibe</h3>
       <input
-        type="text"
-        placeholder="Image URL"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        required
-      />
+  type="file"
+  accept="image/*"
+  onChange={(e) => setFile(e.target.files[0])}
+  required
+/>
+
       <select value={vibe} onChange={(e) => setVibe(e.target.value)}>
         <option value="Cozy">Cozy</option>
         <option value="Nature">Nature</option>

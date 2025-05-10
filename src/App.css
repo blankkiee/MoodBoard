@@ -116,7 +116,7 @@ body {
 }
 
 .upload-wrapper.open {
-  max-height: 800px; /* enough to fit form */
+  max-height: 800px; /* can edit para sa enough fit form */
   opacity: 1;
   transform: scaleY(1);
 }
@@ -130,17 +130,20 @@ body {
 
 .heart-icon {
   position: absolute;
-  top: 8px;
+  top: 10px;
   right: 10px;
   font-size: 22px;
+  cursor: pointer;
   background: white;
   padding: 4px 6px;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   z-index: 2;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  pointer-events: auto;
 }
 
 .heart-icon:hover {
   transform: scale(1.2);
 }
+

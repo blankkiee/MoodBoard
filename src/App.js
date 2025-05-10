@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -6,6 +6,8 @@ import Gallery from './components/Gallery';
 import Modal from './components/Modal';
 import images from './data/images';
 import Login from './pages/Login';
+import React, { useState, useEffect } from 'react';
+  
 
 import UploadForm from './components/UploadForm';
 
@@ -15,11 +17,20 @@ function App() {
   const [user, setUser] = useState(null);
   const [userImages, setUserImages] = useState([]);
   const [showUpload, setShowUpload] = useState(false); // NEW
-  const [favorites, setFavorites] = useState([]);
+  // const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+  const saved = localStorage.getItem('favorites');
+  return saved ? JSON.parse(saved) : [];
+});
+
+useEffect(() => {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}, [favorites]);
+
 
   const handleUpload = (newImage) => {
     setUserImages([newImage, ...userImages]);
-    setShowUpload(false); // Close form after upload
+    setShowUpload(false); // Close form after ng upload ng file
   };
 
   const toggleFavorite = (id) => {
@@ -60,9 +71,11 @@ function App() {
                 <Gallery
   images={filteredImages}
   openModal={setModalImage}
-  favorites={favorites} // NEW
-  toggleFavorite={toggleFavorite} // NEW
+  favorites={favorites}
+  toggleFavorite={toggleFavorite}
+   modalImage={modalImage} 
 />
+
 
                 <Modal image={modalImage} closeModal={() => setModalImage(null)} />
               </div>
